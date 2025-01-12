@@ -1,16 +1,15 @@
 "use client";
 import React, { useState } from "react";
-
+import { FaHome, FaInfoCircle, FaPhone, FaShoppingCart, FaUtensils } from "react-icons/fa";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // لتتبع حالة القائمة
   const [activeLink, setActiveLink] = useState("/menu");
-
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
-    { name: "Cart", href: "/cart" },
-    { name: "Menu", href: "/menu" },
+    { name: "Home", href: "/", icon: <FaHome /> },
+    { name: "About", href: "/about", icon: <FaInfoCircle /> },
+    { name: "Contact", href: "/contact", icon: <FaPhone /> },
+    { name: "Cart", href: "/cart", icon: <FaShoppingCart /> },
+    { name: "Menu", href: "/menu", icon: <FaUtensils /> },
   ];
 
   return (
@@ -53,13 +52,13 @@ function Navbar() {
                   setActiveLink(link.href);
                   setIsMenuOpen(false); // إغلاق القائمة عند اختيار رابط
                 }}
-                className={`block py-2 px-4 text-center w-full ${
+                className={` py-2 px-4 text-center text-4xl mt-3 w-full flex justify-center items-center ${
                   activeLink === link.href
                     ? "bg-gray-900 text-yellow-200 font-bold"
                     : "hover:bg-gray-700 hover:text-yellow-200"
                 } focus:outline-none focus:ring-2 focus:ring-yellow-200 transition-all duration-300`}
               >
-                {link.name}
+                {link.icon}
               </a>
             </li>
           ))}

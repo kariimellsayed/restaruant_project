@@ -1,38 +1,79 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Navbar() {
-  // تخزين الرابط المفعل في حالة
-  const [activeLink, setActiveLink] = useState('/menu'); // تعيين الرابط الأول كافتراضي
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // لتتبع حالة القائمة
+  const [activeLink, setActiveLink] = useState("/menu");
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Menu', href: '/menu' },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+    { name: "Cart", href: "/cart" },
+    { name: "Menu", href: "/menu" },
   ];
 
   return (
-    <nav className='fixed w-44 h-screen flex flex-col justify-center items-center'>
-      <ul className="flex flex-col justify-center items-center p-0 bg-black text-white w-36 my-5 h-full border rounded-3xl">
-        {navLinks.map((link, index) => (
-          <li key={index}>
-            <a
-              href={link.href}
-              onClick={() => setActiveLink(link.href)} // تحديث الرابط المفعل عند النقر
-              className={`
-                block py-2 px-4 text-center m-0 w-full
-                ${activeLink === link.href ? 'bg-gray-900 text-yellow-500 font-bold' : 'hover:bg-gray-700 hover:text-yellow-400'}
-                focus:outline-none focus:ring-2 focus:ring-yellow-500
-                transition-all duration-300
-              `}
-            >
-              {link.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div>
+      {/* زر القائمة */}
+      <button
+        className="fixed top-4 left-4 z-20 p-2 bg-black text-yellow-200 rounded-md md:hidden"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        {/* أيقونة القائمة */}
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      {/* القائمة الجانبية */}
+      
+      <nav
+        className={`fixed top-0 left-0 h-screen w-64 p-5  z-10 transform ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out md:translate-x-0 md:w-44`}
+      >
+        <ul className="flex flex-col justify-center items-center p-0 bg-black text-white border rounded-2xl w-32 h-full font-bold">
+          {navLinks.map((link, index) => (
+            <li key={index} className="w-full">
+              <a
+                href={link.href}
+                onClick={() => {
+                  setActiveLink(link.href);
+                  setIsMenuOpen(false); // إغلاق القائمة عند اختيار رابط
+                }}
+                className={`block py-2 px-4 text-center w-full ${
+                  activeLink === link.href
+                    ? "bg-gray-900 text-yellow-200 font-bold"
+                    : "hover:bg-gray-700 hover:text-yellow-200"
+                } focus:outline-none focus:ring-2 focus:ring-yellow-200 transition-all duration-300`}
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* إضافة خلفية باهتة عند فتح القائمة */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-0"
+          onClick={() => setIsMenuOpen(false)}
+        ></div>
+      )}
+    </div>
   );
 }
 

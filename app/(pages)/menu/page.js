@@ -1,40 +1,78 @@
 "use client";
-import React from "react";
+import Image from "next/image";
+import React, { useState } from "react";
+
+const menuItems = [
+  { id: 1, image: "/Rectangle 9.png", title: "Smashed Avo", description: "Description for item 1.", price: 10.99 },
+  { id: 2, image: "/Rectangle 10.png", title: "Yin & Yang", description: "Description for item 2.", price: 12.99 },
+  { id: 3, image: "/Rectangle 13.png", title: "Rancheros (Tofu)", description: "Description for item 3.", price: 8.99 },
+  { id: 4, image: "/Rectangle 9.png", title: "Pancakes", description: "Description for item 1.", price: 10.99 },
+  { id: 5, image: "/Rectangle 14.png", title: "Huevos Rancheros", description: "Description for item 2.", price: 12.99 },
+  { id: 6, image: "/Rectangle 15.png", title: "Breakkie Roll", description: "Description for item 3.", price: 8.99 },
+];
 
 const MenuPage = () => {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (item) => {
+    setCart((prevCart) => [...prevCart, item]);
+  };
+
+  const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+
   return (
-    <div className="min-h-screen bg-gray-100 py-10 ml-44">
-      <div className="max-w-7xl mx-auto px-6">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">Menu</h1>
-        
-        {/* Menu Section */}
+  
+    
+
+      <div className="min-h-screen bg-gray-100 py-10 md:ml-44 mt-5 p-5">
+<div className="flex justify-between items-center mb-10">
+  <h1 className="md:text-4xl text-2xl font-bold text-gray-800 inline-block border-b-4 border-yellow-200 pb-2">
+    SUSHI FOOD
+  </h1>
+  {/* Cart Section */}
+  <div className="bg-white shadow-md py-2 px-4 flex items-center gap-4 rounded-md">
+    <h2 className="text-lg font-bold">Cart: {cart.length} items</h2>
+    <p className="text-lg font-bold">Total: ${cartTotal.toFixed(2)}</p>
+  </div>
+</div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Menu Item 1 */}
-          <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300">
-            <img src="/path/to/image1.jpg" alt="Menu Item 1" className="w-full h-40 object-cover rounded-t-lg"/>
-            <h2 className="text-2xl font-semibold text-gray-800 mt-4">Item 1</h2>
-            <p className="text-gray-600 mt-2">Description for item 1. This could be a brief explanation of the dish or service.</p>
-            <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">Order Now</button>
-          </div>
-          
-          {/* Menu Item 2 */}
-          <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300">
-            <img src="/path/to/image2.jpg" alt="Menu Item 2" className="w-full h-40 object-cover rounded-t-lg"/>
-            <h2 className="text-2xl font-semibold text-gray-800 mt-4">Item 2</h2>
-            <p className="text-gray-600 mt-2">Description for item 2. A brief explanation of this dish or service.</p>
-            <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">Order Now</button>
-          </div>
-          
-          {/* Menu Item 3 */}
-          <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300">
-            <img src="/path/to/image3.jpg" alt="Menu Item 3" className="w-full h-40 object-cover rounded-t-lg"/>
-            <h2 className="text-2xl font-semibold text-gray-800 mt-4">Item 3</h2>
-            <p className="text-gray-600 mt-2">Description for item 3. Here is a brief description of the dish or service offered.</p>
-            <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">Order Now</button>
-          </div>
+          {menuItems.map((item) => (
+            <div
+              key={item.id}
+              className="bg-black shadow-lg h-60 rounded-lg p-6 hover:shadow-xl transition duration-300 transform hover:scale-105 group relative overflow-hidden"
+            >
+              <div className="relative w-full h-full">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg transition duration-300 transform group-hover:opacity-50"
+                />
+              </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 p-3 group-hover:opacity-100 transition duration-300">
+                <h2 className="text-2xl font-semibold text-white mt-4">
+                  {item.title}
+                </h2>
+                <p className="text-gray-200 mt-2 text-center">
+                  {item.description}
+                </p>
+                <div className="flex gap-3 items-center mt-4">
+                  <p className="text-gray-200 text-lg">${item.price}</p>
+                  <button
+                    onClick={() => addToCart(item)}
+                    className="px-6 py-2 bg-white text-black border rounded-md hover:bg-black hover:text-white transition duration-300"
+                  >
+                    Order Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+  
   );
 };
 

@@ -57,7 +57,7 @@ const Home = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Slides */}
+    
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -68,6 +68,7 @@ const Home = () => {
             backgroundImage: `url(${slide.image}), linear-gradient(to right, #4e54c8, #8f94fb)`,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            
           }}
         >
         <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-40 text-white text-center space-y-4">
@@ -93,7 +94,7 @@ const Home = () => {
         </div>
       ))}
 
-      {/* Navigation Buttons */}
+    
       <button
         onClick={prevSlide}
         aria-label="Previous Slide"

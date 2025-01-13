@@ -1,60 +1,37 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Image from "next/image";
-import React, { useState } from "react";
-
-const menuItems = [
-  {
-    id: 1,
-    image: "/Rectangle 9.png",
-    title: "Smashed Avo",
-    description: "Description for item 1.",
-    price: 10.99,
-  },
-  {
-    id: 2,
-    image: "/Rectangle 10.png",
-    title: "Yin & Yang",
-    description: "Description for item 2.",
-    price: 12.99,
-  },
-  {
-    id: 3,
-    image: "/Rectangle 13.png",
-    title: "Rancheros (Tofu)",
-    description: "Description for item 3.",
-    price: 8.99,
-  },
-  {
-    id: 4,
-    image: "/Rectangle 9.png",
-    title: "Pancakes",
-    description: "Description for item 1.",
-    price: 10.99,
-  },
-  {
-    id: 5,
-    image: "/Rectangle 14.png",
-    title: "Huevos Rancheros",
-    description: "Description for item 2.",
-    price: 12.99,
-  },
-  {
-    id: 6,
-    image: "/Rectangle 15.png",
-    title: "Breakkie Roll",
-    description: "Description for item 3.",
-    price: 8.99,
-  },
-];
 
 const MenuPage = () => {
+  const [menuItems, setMenuItems] = useState([]);
   const [cart, setCart] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
 
+  // Function to fetch menu items from JSON file
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await axios.get("/menu.json");
+        setMenuItems(response.data);
+      } catch (error) {
+        console.error("Error fetching menu items:", error);
+      }
+    };
+
+    fetchMenuItems();
+  }, []);
+
+  // Function to add item to the cart
   const addToCart = (item) => {
-    setCart((prevCart) => [...prevCart, item]);
+    setCart((prevCart) => {
+      const updatedCart = [...prevCart, item];
+      // Update cart total
+      const newTotal = updatedCart.reduce((total, item) => total + item.price, 0);
+      setCartTotal(newTotal);
+      return updatedCart;
+    });
   };
-
-  const cartTotal = cart.reduce((total, item) => total + item.price, 0);
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 md:ml-44 mt-5 p-5">
@@ -88,9 +65,7 @@ const MenuPage = () => {
               <h2 className="text-2xl font-semibold text-white mt-4">
                 {item.title}
               </h2>
-              <p className="text-gray-200 mt-2 text-center">
-                {item.description}
-              </p>
+              <p className="text-gray-200 mt-2 text-center">{item.description}</p>
               <div className="flex gap-3 items-center mt-4">
                 <p className="text-gray-200 text-lg">${item.price}</p>
                 <button

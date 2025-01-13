@@ -1,6 +1,12 @@
 import React from "react";
+import { useRouter } from "next/router";
 
-const page = () => {
+const CartPage = () => {
+  const router = useRouter();
+  const { cart } = router.query;
+  const cartItems = cart ? JSON.parse(cart) : [];
+  const cartTotal = cartItems.reduce((total, item) => total + item.price, 0);
+
   return (
     <section className="min-h-screen bg-gray-100 py-10 md:pl-44 p-5 flex">
       {/* Main Content */}
@@ -14,17 +20,27 @@ const page = () => {
         <div className="flex flex-wrap gap-5">
           {/* Cart Items */}
           <div className="flex-1 bg-[#F1D5BB] p-5 rounded-lg">
-            <div className="flex items-center justify-center gap-7"></div>
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty.</p>
+            ) : (
+              cartItems.map((item) => (
+                <div key={item.id} className="flex items-center justify-between mb-4">
+                  <img src={item.image} alt={item.title} className="w-20 h-20 object-cover rounded-md" />
+                  <div className="flex flex-col ml-4">
+                    <span className="font-bold">{item.title}</span>
+                    <span>${item.price}</span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
 
           {/* Summary Section */}
           <div className="w-1/4 space-y-5">
             <div className="bg-[#F1D5BB] p-5 rounded-lg">
-              <h2 className="text-lg font-bold text-gray-700 mb-5">
-                Your Subtotal
-              </h2>
+              <h2 className="text-lg font-bold text-gray-700 mb-5">Your Subtotal</h2>
               <p className="flex justify-between text-gray-700 mb-3">
-                <span>Subtotal</span> <span>$80.00</span>
+                <span>Subtotal</span> <span>${cartTotal.toFixed(2)}</span>
               </p>
               <button className="w-full bg-black text-white py-2 rounded">
                 Confirm Order
@@ -32,9 +48,7 @@ const page = () => {
             </div>
 
             <div className="bg-white p-5 rounded-lg shadow">
-              <h2 className="text-lg font-bold text-gray-700 mb-5">
-                Promo Code
-              </h2>
+              <h2 className="text-lg font-bold text-gray-700 mb-5">Promo Code</h2>
               <input
                 type="text"
                 placeholder="Enter promo code"
@@ -51,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CartPage;

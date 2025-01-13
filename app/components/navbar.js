@@ -1,9 +1,19 @@
 "use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import { FaHome, FaInfoCircle, FaPhone, FaShoppingCart, FaUtensils } from "react-icons/fa";
+import {
+  FaHome,
+  FaInfoCircle,
+  FaPhone,
+  FaShoppingCart,
+  FaUtensils,
+} from "react-icons/fa";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // لتتبع حالة القائمة
-  const [activeLink, setActiveLink] = useState("/menu");
+
+  const active = usePathname();
+
   const navLinks = [
     { name: "Home", href: "/", icon: <FaHome /> },
     { name: "About", href: "/about", icon: <FaInfoCircle /> },
@@ -37,29 +47,27 @@ function Navbar() {
       </button>
 
       {/* القائمة الجانبية */}
-      
+
       <nav
-        className={`fixed top-0 left-0 h-screen w-64 p-5  z-10 transform ${
+        className={`fixed top-0 left-0 h-screen w-[137px] p-5  z-10 transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out md:translate-x-0 md:w-44`}
       >
         <ul className="flex flex-col justify-center items-center p-0 bg-black text-white border rounded-2xl w-32 h-full font-bold">
           {navLinks.map((link, index) => (
             <li key={index} className="w-full">
-              <a
+              <Link
                 href={link.href}
                 onClick={() => {
                   setActiveLink(link.href);
                   setIsMenuOpen(false); // إغلاق القائمة عند اختيار رابط
                 }}
                 className={` py-2 px-4 text-center text-4xl mt-3 w-full flex justify-center items-center ${
-                  activeLink === link.href
-                    ? "bg-gray-900 text-yellow-200 font-bold"
-                    : "hover:bg-gray-700 hover:text-yellow-200"
+                  link.href == active && "text-yellow-200"
                 } focus:outline-none focus:ring-2 focus:ring-yellow-200 transition-all duration-300`}
               >
                 {link.icon}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "image": "/Rectangle 9.png",
+    "title": "Smashed Avo",
+    "description": "Description for item 1.",
+    "price": 10.99
+  },
+  {
+    "id": 2,
+    "image": "/Rectangle 10.png",
+    "title": "Yin & Yang",
+    "description": "Description for item 2.",
+    "price": 12.99
+  },
+  {
+    "id": 3,
+    "image": "/Rectangle 13.png",
+    "title": "Rancheros (Tofu)",
+    "description": "Description for item 3.",
+    "price": 8.99
+  },
+  {
+    "id": 4,
+    "image": "/Rectangle 9.png",
+    "title": "Pancakes",
+    "description": "Description for item 1.",
+    "price": 10.99
+  },
+  {
+    "id": 5,
+    "image": "/Rectangle 14.png",
+    "title": "Huevos Rancheros",
+    "description": "Description for item 2.",
+    "price": 12.99
+  },
+  {
+    "id": 6,
+    "image": "/Rectangle 15.png",
+    "title": "Breakkie Roll",
+    "description": "Description for item 3.",
+    "price": 8.99
+  }
+]

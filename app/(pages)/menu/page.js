@@ -23,14 +23,45 @@ const MenuPage = () => {
   }, []);
 
   // Function to add item to the cart
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const updatedCart = [...prevCart, item];
-      // Update cart total
-      const newTotal = updatedCart.reduce((total, item) => total + item.price, 0);
-      setCartTotal(newTotal);
-      return updatedCart;
-    });
+  const addToCart = (item) => {  
+    setCart((prevCart) => {  
+
+      const existingItemIndex = prevCart.findIndex(cartItem => cartItem.id === item.id);  
+      
+      if (existingItemIndex >= 0) {  
+
+        const updatedCart = prevCart.map((cartItem, index) => {  
+          if (index === existingItemIndex) {  
+            return {  
+              ...cartItem,  
+              quantity: cartItem.quantity + 1 
+            };  
+          }  
+          return cartItem;  
+        });  
+  
+ 
+        const newTotal = updatedCart.reduce((total, cartItem) => total + (cartItem.price * cartItem.quantity), 0);  
+        setCartTotal(newTotal);  
+  
+ 
+        localStorage.setItem("cart", JSON.stringify(updatedCart));  
+  
+        return updatedCart;  
+      } else { 
+        const newItem = { ...item, quantity: 1 };  
+        const updatedCart = [...prevCart, newItem];  
+  
+ 
+        const newTotal = updatedCart.reduce((total, cartItem) => total + (cartItem.price * cartItem.quantity), 0);  
+        setCartTotal(newTotal);  
+  
+
+        localStorage.setItem("cart", JSON.stringify(updatedCart));  
+  
+        return updatedCart;  
+      }  
+    });  
   };
 
   return (

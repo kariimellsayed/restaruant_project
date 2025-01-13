@@ -65,7 +65,7 @@ const MenuPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 md:ml-44 mt-5 p-5">
+    <div className="min-h-screen  py-10 md:ml-44 mt-5 p-5">
       <div className="flex justify-between items-center mb-10">
         <h1 className="md:text-4xl text-2xl font-bold text-gray-800 inline-block border-b-4 border-[#F1D5BB] pb-2">
           SUSHI FOOD

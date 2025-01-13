@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import {
   FaHome,
   FaInfoCircle,
-  FaPhone,
+  FaMapMarkerAlt,
   FaShoppingCart,
   FaUtensils,
 } from "react-icons/fa";
@@ -17,7 +17,7 @@ function Navbar() {
   const navLinks = [
     { name: "Home", href: "/", icon: <FaHome /> },
     { name: "About", href: "/about", icon: <FaInfoCircle /> },
-    { name: "Contact", href: "/contact", icon: <FaPhone /> },
+    { name: "lociton", href: "/lociton", icon: <FaMapMarkerAlt />},
     { name: "Cart", href: "/cart", icon: <FaShoppingCart /> },
     { name: "Menu", href: "/menu", icon: <FaUtensils /> },
   ];
@@ -26,7 +26,7 @@ function Navbar() {
     <div>
       {/* زر القائمة */}
       <button
-        className="fixed top-4 left-4 z-20 p-2 bg-black text-yellow-200 rounded-md md:hidden"
+        className="fixed top-4 left-4 z-30 p-2 bg-black text-yellow-200 rounded-md md:hidden"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
         {/* أيقونة القائمة */}
@@ -49,7 +49,7 @@ function Navbar() {
       {/* القائمة الجانبية */}
 
       <nav
-        className={`fixed top-0 left-0 h-screen w-[137px] p-5  z-10 transform ${
+        className={`fixed top-0 left-0 h-screen w-[137px] p-5  z-20 transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out md:translate-x-0 md:w-44`}
       >

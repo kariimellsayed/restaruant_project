@@ -1,11 +1,25 @@
 import React from "react";
-import { useRouter } from "next/router";
+
 
 const CartPage = () => {
-  const router = useRouter();
-  const { cart } = router.query;
-  const cartItems = cart ? JSON.parse(cart) : [];
-  const cartTotal = cartItems.reduce((total, item) => total + item.price, 0);
+  const [cartItems, setCartItems] = useState([]);  
+  const [cartTotal, setCartTotal] = useState(0);  
+  
+  useEffect(() => {  
+    const cartData = localStorage.getItem("cart");  
+    const items = cartData ? JSON.parse(cartData) : [];  
+    
+ 
+    const validItems = items.filter(item => item.price && typeof item.price === 'number');  
+  
+    setCartItems(validItems);  
+    setCartTotal(validItems.reduce((total, item) => total + item.price, 0));  
+  }, []);  
+  
+  useEffect(() => {  
+    setCartTotal(cartItems.reduce((total, item) => total + item.price, 0));  
+  }, [cartItems]); 
+
 
   return (
     <section className="min-h-screen bg-gray-100 py-10 md:pl-44 p-5 flex">
